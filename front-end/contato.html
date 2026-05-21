@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- Começo da pág de contato, feita pra mostrar os canais da Evonium. - Adicionado por Guilherme Bento. -->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evonium - Contato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header do site com logo e menu principal. - Adicionado por Guilherme Bento. -->
+    <header class="topo">
+    <a class="marca" href="index.html">
+      <img src="../assets/Logo_Evonium.png" alt="Logo Evonium">
+      <b>Evonium</b>
+    </a>
+
+    <!-- Links pra navegar pelas págs do site. - Adicionado por Guilherme Bento. -->
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="contato.html">Contatos</a>
+      <a href="sobre.html">Sobre nós</a>
+      <a href="equipe.html">Equipe</a>
+      <a href="carrinho.html">Carrinho</a>
+    </nav>
+  </header>
+
+    <!-- Conteúdo principal da pág de contato. - Adicionado por Guilherme Bento. -->
+    <main>
+        <!-- Cabeçalho da pág, só pra apresentar a área de contato. - Adicionado por Guilherme Bento. -->
+        <section class="cabecalho-pagina">
+            <h1>Contato</h1>
+            <p>Fale com a Evonium pelos canais abaixo.</p>
+        </section>
+
+        <!-- Seção com email e telefone pra atendimento. - Adicionado por Guilherme Bento. -->
+        <section class="secao">
+            <h2>Atendimento</h2>
+            <p>
+                <strong>E-mail:</strong>
+                <!-- Usei mailto pq assim o clique já tenta abrir um app de email. - Adicionado por Guilherme Bento. -->
+                <a href="mailto:evonium.dev@gmail.com">evonium.dev@gmail.com</a>
+            </p>
+            <p>
+                <strong>Telefone:</strong>
+                <a href="tel:+5511999999999">(11) 99999-9999</a>
+            </p>
+        </section>
+
+        <!-- Formulário simples pra simular o envio de uma msg. - Adicionado por Guilherme Bento. -->
+        <section class="formulario">
+            <form id="form-contato">
+                <label>Nome</label>
+                <input type="text" required>
+
+                <label>E-mail</label>
+                <input type="email" required>
+
+                <label>Assunto</label>
+                <select>
+                    <option>Duvida sobre produto</option>
+                    <option>Entrega</option>
+                    <option>Pedido</option>
+                    <option>Outro</option>
+                </select>
+
+                <label>Mensagem</label>
+                <textarea rows="5" required></textarea>
+
+                <button class="botao" type="submit">Enviar mensagem</button>
+                <p id="retorno-contato" class="mensagem"></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer simples pra finalizar a pág. - Adicionado por Guilherme Bento. -->
+    <footer>
+    <p>Evonium - Since 2026</p>
+  </footer>
+
+    <!-- Script q mostra a msg de retorno quando o formulário é enviado. - Adicionado por Guilherme Bento. -->
+    <script src="js/app.js"></script>
+</body>
+</html>

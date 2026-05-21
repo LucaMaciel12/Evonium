@@ -1,0 +1,14 @@
+{
+  "name": "evonium-backend",
+  "version": "1.0.0",
+  "description": "Back-end para e-commerce Evonium",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.22.2",
+    "sqlite3": "^5.1.6"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
