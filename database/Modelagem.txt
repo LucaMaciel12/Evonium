@@ -123,7 +123,6 @@ CREATE TABLE tab_estoque(
 CREATE TABLE tab_pedidos(
 	id_pedido INT PRIMARY KEY IDENTITY,
 	id_cliente INT NOT NULL,
-	id_usuario INT NOT NULL,
 	id_funcionario INT NULL,
 	data DATETIME NOT NULL DEFAULT GETDATE(),
 	total DECIMAL(10,2) NOT NULL,
@@ -131,10 +130,6 @@ CREATE TABLE tab_pedidos(
 	CONSTRAINT fk_pedido_cliente
 	FOREIGN KEY (id_cliente)
 	REFERENCES tab_clientes(id_cliente),
-
-	CONSTRAINT fk_pedido_usuario
-	FOREIGN KEY (id_usuario)
-	REFERENCES tab_usuarios(id_usuario),
 
 	CONSTRAINT fk_pedido_funcionario
 	FOREIGN KEY (id_funcionario)
@@ -165,13 +160,250 @@ CREATE TABLE tab_itens_pedido(
 -- =========================================
 -- CARDINALIDADES
 -- =========================================
--- USUÁRIOS -> FUNCIONÁRIOS: 1 : 1
--- CLIENTES -> USUÁRIOS: 1 : 1
+--- USUÁRIOS -> FUNCIONÁRIOS: 1 : 1
+-- USUÁRIOS -> CLIENTES: 1 : 1
 -- CLIENTES -> ENDEREÇOS: 1 : N
 -- CLIENTES -> PEDIDOS: 1 : N
--- USUÁRIOS -> PEDIDOS: 1 : N
 -- FUNCIONÁRIOS -> PEDIDOS: 1 : N
 -- CATEGORIAS -> PRODUTOS: 1 : N
 -- PRODUTOS -> ESTOQUE: 1 : 1
 -- PEDIDOS -> ITENS_PEDIDO: 1 : N
 -- PRODUTOS -> ITENS_PEDIDO: 1 : N
+
+
+-- =========================================
+-- INSERTS - TAB_USUARIOS
+-- =========================================
+INSERT INTO tab_usuarios(login, email, senha, telefone, nivel)
+VALUES
+('adminmaster', 'admin@evonium.com', 'admin123', '(11)99999-1001', 0),
+('guilhermebento', 'guilhermebento@gmail.com', 'guilherme123', '(11)98888-2001', 0),
+('gabrielborges', 'gabrielborges@gmail.com', 'maria123', '(11)97777-3001', 0),
+('gustavo', 'gustavo@evonium.com', 'carlos123', '(11)96666-4001', 0),
+('anapaula', 'ana@gmail.com', 'ana123', '(11)95555-5001', 1),
+('fernandocosta', 'fernando@gmail.com', 'fernando123', '(11)94444-6001', 1),
+('juliasantos', 'julia@gmail.com', 'julia123', '(11)93333-7001', 1),
+('rodrigotech', 'rodrigo@evonium.com', 'rodrigo123', '(11)92222-8001', 1),
+('beatrizlima', 'beatriz@gmail.com', 'bia123', '(11)91111-9001', 1),
+('lucasmoreira', 'lucas@gmail.com', 'lucas123', '(11)90000-0001', 1);
+
+-- =========================================
+-- INSERTS - TAB_FUNCIONARIOS
+-- =========================================
+INSERT INTO tab_funcionarios
+(id_usuario, nome, email, cpf, rg, telefone)
+VALUES
+(1, 'Administrador Master', 'admin@evonium.com', '111.111.111-11', '11.111.111-1', '(11)99999-1001'),
+
+(4, 'Carlos Henrique', 'carlos@evonium.com', '222.222.222-22', '22.222.222-2', '(11)96666-4001'),
+
+(8, 'Rodrigo Almeida', 'rodrigo@evonium.com', '333.333.333-33', '33.333.333-3', '(11)92222-8001');
+
+-- =========================================
+-- INSERTS - TAB_CLIENTES
+-- =========================================
+INSERT INTO tab_clientes
+(id_usuario, nome, email, fone, dtnasc, sexo, status)
+VALUES
+(2, 'João Silva', 'joao@gmail.com', '(11)98888-2001', '1998-05-14', 'Masculino', 1),
+
+(3, 'Maria Oliveira', 'maria@gmail.com', '(11)97777-3001', '1995-09-21', 'Feminino', 1),
+
+(5, 'Ana Paula', 'ana@gmail.com', '(11)95555-5001', '2001-03-10', 'Feminino', 1),
+
+(6, 'Fernando Costa', 'fernando@gmail.com', '(11)94444-6001', '1992-11-08', 'Masculino', 1),
+
+(7, 'Julia Santos', 'julia@gmail.com', '(11)93333-7001', '2000-07-17', 'Feminino', 1),
+
+(9, 'Beatriz Lima', 'beatriz@gmail.com', '(11)91111-9001', '1997-12-02', 'Feminino', 1),
+
+(10, 'Lucas Moreira', 'lucas@gmail.com', '(11)90000-0001', '1994-01-25', 'Masculino', 1);
+
+-- =========================================
+-- INSERTS - TAB_ENDERECOS
+-- =========================================
+INSERT INTO tab_enderecos
+(id_cliente, rua, numero, bairro, cidade, estado, cep)
+VALUES
+(1, 'Rua das Flores', '120', 'Centro', 'São Paulo', 'SP', '01010-000'),
+
+(2, 'Av. Paulista', '1500', 'Bela Vista', 'São Paulo', 'SP', '01310-200'),
+
+(3, 'Rua Augusta', '850', 'Consolação', 'São Paulo', 'SP', '01413-000'),
+
+(4, 'Rua XV de Novembro', '300', 'Centro', 'Curitiba', 'PR', '80020-310'),
+
+(5, 'Av. Atlântica', '500', 'Copacabana', 'Rio de Janeiro', 'RJ', '22010-000'),
+
+(6, 'Rua Pernambuco', '95', 'Savassi', 'Belo Horizonte', 'MG', '30130-150'),
+
+(7, 'Rua Beira Mar', '700', 'Meireles', 'Fortaleza', 'CE', '60165-120');
+
+-- =========================================
+-- INSERTS - TAB_CATEGORIAS
+-- =========================================
+INSERT INTO tab_categorias(nome)
+VALUES
+('Masculino'),
+('Feminino'),
+('Unissex'),
+('Importado'),
+('Nacional'),
+('Body Splash'),
+('Kit Presente'),
+('Premium'),
+('Árabe'),
+('Infantil');
+
+-- =========================================
+-- INSERTS - TAB_PRODUTOS
+-- =========================================
+INSERT INTO tab_produtos
+(id_categoria, nome, genero, tipo, fragrancia,
+volume_ml, preco, data_validade)
+VALUES
+(1, 'Essencial Oud', 'Masculino', 'Perfume', 'Amadeirada', 100, 289.90, '2028-12-31'),
+
+(2, 'La Vie Belle', 'Feminino', 'Perfume', 'Doce Floral', 75, 459.90, '2029-06-30'),
+
+(3, 'CK One', 'Unissex', 'Perfume', 'Cítrico', 100, 329.90, '2028-09-15'),
+
+(4, '212 VIP Black', 'Masculino', 'Perfume', 'Oriental', 100, 549.90, '2029-03-20'),
+
+(5, 'Kaiak Aero', 'Masculino', 'Colônia', 'Aquática', 100, 149.90, '2027-11-01'),
+
+(6, 'Body Splash Lily', 'Feminino', 'Body Splash', 'Floral', 200, 89.90, '2027-05-15'),
+
+(7, 'Kit Malbec', 'Masculino', 'Kit', 'Amadeirada', 150, 199.90, '2028-01-10'),
+
+(8, 'Sauvage Dior', 'Masculino', 'Perfume', 'Amadeirada Fresca', 100, 799.90, '2030-10-10'),
+
+(9, 'Club de Nuit', 'Masculino', 'Perfume', 'Amadeirada Cítrica', 105, 349.90, '2029-08-18'),
+
+(10, 'Barbie Kids', 'Infantil', 'Colônia', 'Frutada', 50, 59.90, '2027-02-28');
+
+-- =========================================
+-- INSERTS - TAB_ESTOQUE
+-- =========================================
+INSERT INTO tab_estoque(id_produto, qtde)
+VALUES
+(1, 12),
+(2, 6),
+(3, 12),
+(4, 5),
+(5, 19),
+(6, 14),
+(7, 8),
+(8, 0),
+(9, 6),
+(10, 21);
+
+select * from tab_estoque;
+-- =========================================
+-- INSERTS - TAB_PEDIDOS
+-- =========================================
+INSERT INTO tab_pedidos
+(id_cliente, id_funcionario, total)
+VALUES
+(1, 2, 289.90),
+(2, 2, 549.90),
+(3, 3, 149.90),
+(4, 2, 799.90),
+(5, 3, 89.90),
+(6, 2, 349.90),
+(7, 3, 199.90),
+(1, 2, 329.90),
+(2, 3, 459.90),
+(3, 2, 59.90),
+(1, 2, 639.80),
+(2, 3, 699.80),
+(3, 2, 239.80),
+(4, 3, 1089.80),
+(5, 2, 379.80),
+(6, 3, 959.80),
+(7, 2, 439.80),
+(1, 3, 1149.80),
+(2, 2, 239.80),
+(3, 3, 889.80);
+
+-- =========================================
+-- INSERTS - TAB_ITENS_PEDIDO
+-- =========================================
+INSERT INTO tab_itens_pedido
+(id_pedido, id_produto, valor, qtde, subtotal)
+VALUES
+(1, 1, 289.90, 1, 289.90),
+
+(2, 4, 549.90, 1, 549.90),
+
+(3, 5, 149.90, 1, 149.90),
+
+(4, 8, 799.90, 1, 799.90),
+
+(5, 6, 89.90, 1, 89.90),
+
+(6, 9, 349.90, 1, 349.90),
+
+(7, 7, 199.90, 1, 199.90),
+
+(8, 3, 329.90, 1, 329.90),
+
+(9, 2, 459.90, 1, 459.90),
+
+(10, 10, 59.90, 1, 59.90),
+
+(11, 1, 289.90, 2, 579.80), (11, 6, 89.90, 1, 89.90),
+
+(12, 2, 459.90, 1, 459.90), (12, 10, 59.90, 4, 239.60),
+
+(13, 5, 149.90, 1, 149.90), (13, 6, 89.90, 1, 89.90),
+
+(14, 8, 799.90, 1, 799.90), (14, 7, 199.90, 1, 199.90), (14, 10, 59.90, 1, 59.90),
+
+(15, 9, 349.90, 1, 349.90), (15, 10, 59.90, 1, 59.90),
+
+(16, 8, 799.90, 1, 799.90), (16, 7, 199.90, 1, 199.90),
+
+(17, 2, 459.90, 1, 459.90),
+
+(18, 8, 799.90, 1, 799.90), (18, 1, 289.90, 1, 289.90), (18, 6, 89.90, 1, 89.90),
+
+(19, 10, 59.90, 4, 239.60),
+
+(20, 8, 799.90, 1, 799.90), (20, 6, 89.90, 1, 89.90);
+
+-- =========================================
+--MOSTRANDO O PRODUTO MAIS VENDIDO
+-- =========================================
+SELECT TOP 1 
+    p.nome AS produto, 
+    SUM(i.qtde) AS total_vendido
+FROM tab_itens_pedido i
+JOIN tab_produtos p
+ON i.id_produto = p.id_produto
+GROUP BY p.nome
+ORDER BY total_vendido DESC;
+
+-- =========================================
+--MOSTRANDO O FATURAMENTO DO MÊS
+-- =========================================
+SELECT
+	MONTH(data) AS mes,
+	YEAR(data) AS ano,
+	SUM(total) AS faturamento_mes
+FROM tab_pedidos
+GROUP BY YEAR(data), MONTH(data)
+ORDER BY ano DESC, mes DESC;
+
+
+-- =========================================
+--MOSTRANDO OS CLIENTES Q MAIS FIZERAM PEDIDOS
+-- =========================================
+SELECT
+	c.nome AS cliente,
+	COUNT(p.id_pedido) AS total_pedidos
+FROM tab_pedidos p
+INNER JOIN tab_clientes c
+	ON p.id_cliente = c.id_cliente
+GROUP BY c.nome
+ORDER BY total_pedidos DESC;
