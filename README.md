@@ -25,6 +25,7 @@ O projeto foi construído com foco em organização, identidade visual e integra
 - SQLite
 - sqlite3
 - CORS
+- Visual Studio Code
 
 ## Estrutura
 
